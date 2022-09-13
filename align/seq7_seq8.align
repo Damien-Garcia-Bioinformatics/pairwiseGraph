@@ -1,0 +1,47 @@
+seq7 - seq8 result alignment :
+
+-ATGTTCGC-G-GCGCTA-GATCCCATACGT-AAT-GA--GGA-GTGG-TGGCGA---ACG-C--G-C--T-TT-AG---
+ |  ||    | | | |  | | || ||  | ||  ||  ||| | || | | ||   ||  |  | |  | || ||   
+CA--TT---AGAG-G-T-CG-T-CC-TA--TTAA-AGAATGGAAG-GGCT-G-GATTTAC-TCTCGGCAATCTTCAGTTA
+
+C-C--CGGT-GACA-TC-ATC-CGCC-CGATCTACCTCA--ATTCC-T-CTTC-CT-TCACG--G-CAT-TA-TA--TAA
+| |  | || | || || ||  ||   |||   |    |  |||   | |||  || | ||   | | | |  ||  |||
+CTCATC-GTTG-CAGTCGAT-ACG--GCGA---A----AGCATT--GTTCTT-GCTAT-AC-CTGTC-TCT-CTAGGTAA
+
+ATTGGCGAT-AG-ACCCCG---G-GC-GCAC--C--CAAAAGGGCT-TACG--AATGT-C-A--GAA---CCTG-G-G-A
+|   ||    || ||||||   | || | |   |  |   |  ||| || |  ||    | |  |||   |||| | | |
+A---GC---CAGTACCCCGATTGTGCTG-A-ATCTTC---A--GCTCTA-GCTAA---ACCAAAGAAGAGCCTGTGTGTA
+
+----TG-C--TTC-TTCCTCACCTCA-TGTTTGTTAAT-CG-A-G-C--C--CGGAATGGGCGCACACGC---A--AT--
+    || |  ||  ||  |    ||  ||  ||    | || | | |  |  | |||     || || |    |  ||  
+CGAATGACAGTT-ATT--T----TC-CTG--TG----TGCGCAAGACGACTAC-GAA-----GC-CA-G-GGGATGATTA
+
+C--CTA--TCGTGACC-GCGCCCG--CC---CG--T-C-A-ATAA-TC---------CAA-TGCG-AGGATA-TA---AT
+|  |||  || | |   | |   |  ||   ||  | | | || | ||         ||| | |  |||||| ||   ||
+CAACTAGCTC-T-A--AG-G---GTTCCATACGAGTTCCACAT-AGTCTGATTTAGGCAACT-C-TAGGATAGTACTTAT
+
+CG-GCTCCG-CTGTAGCCCCTCATCAGCCGAT-TG-ATTTGTATAACA--TG-GG-ATC--GCA-GCACATCTTGGC-T-
+|| |    | |  ||   ||| | |  || |  || |||||    ||   || || |||  ||| | | |   | || | 
+CGAG----GAC--TA---CCT-A-C--CC-A-GTGCATTTG----AC-GGTGCGGCATCCCGCAAG-A-A---T-GCCTA
+
+TCCGGTCTTATCGCGG-TCGT--AAC-ACACAGTTAA-A-TT-CGTT-T-AGTATCGGCCCCATAC-CCGCACA-G---G
+| |   | |||  | | |  |  ||  ||| ||  || | || |  | | || | | |   || |  || || | |   |
+T-C---C-TAT--C-GAT--TTTAA-TACA-AG--AAGAGTTAC--TCTGAG-A-C-G---CA-A-TCC-CA-ATGTATG
+
+CGACT-GAC---G-C-A---A-AACAGA-ATT-CGG-C--G-G-ATGC-T---AT-A-AGCTGGGATG-A-CGG-GGCGA
+ | || | |   | | |   | |||    ||| |   |  | | |  | |   || | | ||    |  | | | || | 
+-G-CTTG-CTTTGGCGACCGATAAC---CATTTC--ACTCGCGCA--CGTTCCATTATA-CT----T-CATC-GCGG-G-
+
+ACCCTA--GAT-CCGCTAGGACTAAAGGAG-T--G-AAC-CGTT-GACTCTA-AATTAAACCTTCGGT-GATC-C-G---
+    |   | | |||| |||     ||||  |  | ||  ||   ||| |   || |   || ||  | | |  | |   
+----T-TTG-TGCCGC-AGG-----AGGA-ATATGCAA-ACG--CGAC-C--GAA-T---CC-TC--TTG-T-ACTGATA
+
+GCCCTTGTG-G-AACTTGATCCCCT-TCAGGATGAC-CAACTTT-AATTA-GAGAGTCGTCC--C-TTCAATTACGCA-A
+|  |  | | | ||| |||       | |  ||  | |  |  | ||  | | || |||  |  | ||| |  |  || |
+G--C--G-GAGTAAC-TGA------GT-A--AT--CGC--C--TGAA--ACG-GA-TCG--CGACGTTC-A--A--CAGA
+
+CCTA-AT--AT-ATGCC---GGTAAAC-ACGTACA---CG-G----AAGC-A--CA-
+  |  ||  || ||  |   ||    | || ||||   || |    |||  |  |  
+--T-CATGCATTAT--CTTTGG----CCAC-TACAGTTCGTGGTCGAAG-TATGC-C
+
+  Score=403

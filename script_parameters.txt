@@ -1,0 +1,20 @@
+#######################################
+#   PARAMETERS FILE - PairwiseGraph   #
+#######################################
+
+# INFORMATION :
+# Modify values and parameters from this file to change how the script will execute.
+# Do not delete parameters, only change the values.
+# For more information, use 'python3 pairwiseGraph.py help' or read the README.md file.
+
+# SEQUENCE TO USE :
+file=nucleic_acid.fasta;                      # If 'None', the sequence generator will be used
+
+# SEQUENCE GENERATOR :
+number_of_sequences=10;         # Number of sequence generated
+minimum_length=500;             # Minimum length of generated sequence
+maximum_length=1000;            # Should be higher than miminum length
+filename=seqGen.fasta;          # Name of file where generated sequence will be stored
+
+# GRAPH GENERATOR :
+treshold=61;                    # Minimum %identity between sequence for which alignment result is stored
