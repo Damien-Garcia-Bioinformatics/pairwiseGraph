@@ -56,52 +56,82 @@ def fasta_gen(dicParam) :
 
 	return filename
 
-# Reads and stores data from fasta file to dictionary
+def GCcontent(seq) :
+	seqLen = len(seq)
+	count = 0
+	for i in range(seqLen) :
+		if seq[i] in ['G','C'] :
+			count += 1
+	return ((count/seqLen)*100)
+
 def read_fasta(file) :
 	dicFasta = {}
 	with open(file) as f :
+		seq = ''
 		for line in f :
 			line = line.rstrip('\n')
+			if line.startswith('>') and seq != '' :
+				dicFasta[id] = {"sequence" : seq, "GCcontent" : GCcontent(seq)}
 			if line.startswith('>') :
 				id = line[1:]
-				dicFasta[id] = ''
 			else :
-				dicFasta[id] += line
+				seq += line
+	# print(dicFasta)
 	return dicFasta
+
+# # Reads and stores data from fasta file to dictionary
+# def read_fasta(file) :
+# 	dicFasta = {}
+# 	with open(file) as f :
+# 		for line in f :
+# 			line = line.rstrip('\n')
+# 			if line.startswith('>') :
+# 				id = line[1:]
+# 				dicFasta[id] = ''
+# 			else :
+# 				dicFasta[id] += line
+# 	return dicFasta
 
 def beautiful_print(result, seq1, seq2) :
 	maxSize = 80
-	x = len(result[0]) // maxSize
+	p = len(result[0]) // maxSize
 	r = len(result[0]) % maxSize
 	if r != 0 :
-		x += 1
+		p += 1
 	if not os.path.exists("align") :
 		os.makedirs("align")
-	with open(f"align/{seq1}_{seq2}.align", "w+") as f:
+	with open(f"align/{seq1}_{seq2}.align", "w+") as f :
 		f.write(f"{seq1} - {seq2} result alignment :\n\n")
-		for i in range(x):
+		for i in range(x) :
 			f.write(f"{result[0][i*maxSize:(i+1)*maxSize]}\n")
 			f.write(f"{result[1][i*maxSize:(i+1)*maxSize]}\n")
 			f.write(f"{result[2][i*maxSize:(i+1)*maxSize]}\n\n")
 		f.write(result[3])
 
-# VERSION 2
 # Generates a graph from pairwise alignment of fasta sequences
 def graph(dicFasta) :
-	#edges2draw = []
+	# nodes2draw = []
+	# edges2draw = []
+
+	for key in dicFasta.items() :
+		print(key[1]['GCcontent'])
+
 	G = nx.Graph()
-	G.add_nodes_from([(id, {'sequence': seq}) for (id, seq) in dicFasta.items()])
-	lstID = list(dicFasta.keys())
-	for i in range(len(lstID)) :
-		for j in range(len(lstID)) :
-			if not i >= j :
-				treshold = int((max(len(dicFasta[lstID[i]]), len(dicFasta[lstID[j]]))) * 0.61)
-				alignments = pairwise2.align.globalxx(dicFasta[lstID[i]], dicFasta[lstID[j]], one_alignment_only=True)
-				if alignments[0][2] > treshold :
-					G.add_edge(lstID[i], lstID[j], weight=alignments[0][2])
-					for alignment in alignments :
-						result = (pairwise2.format_alignment(*alignment)).split('\n')
-						beautiful_print(result, lstID[i], lstID[j])
+	# lstNodes = [(1,100), (2,600)]
+	G.add_node(1, weight=100)
+	G.add_node(2, weight=400)
+	# G.add_nodes_from([(id, {'sequence': seq}) for (id, seq) in dicFasta.items()])
+	# lstID = list(dicFasta.keys())
+	# for i in range(len(lstID)) :
+	# 	for j in range(len(lstID)) :
+	# 		if not i >= j :
+	# 			treshold = int((max(len(dicFasta[lstID[i]]), len(dicFasta[lstID[j]]))) * 0.61)
+	# 			alignments = pairwise2.align.globalxx(dicFasta[lstID[i]], dicFasta[lstID[j]], one_alignment_only=True)
+	# 			if alignments[0][2] > treshold :
+	# 				G.add_edge(lstID[i], lstID[j], weight=alignments[0][2])
+	# 				for alignment in alignments :
+	# 					result = (pairwise2.format_alignment(*alignment)).split('\n')
+	# 					beautiful_print(result, lstID[i], lstID[j])
 
 	nx.draw(G, with_labels=True) #edgelist=edges2draw
 	nx.write_graphml(G, 'graph.graphml', encoding='utf-8', prettyprint=True, infer_numeric_types=False, named_key_ids=False)

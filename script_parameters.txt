@@ -8,7 +8,7 @@
 # For more information, use 'python3 pairwiseGraph.py help' or read the README.md file.
 
 # SEQUENCE TO USE :
-file=nucleic_acid.fasta;                      # If 'None', the sequence generator will be used
+file=None;                      # If 'None', the sequence generator will be used
 
 # SEQUENCE GENERATOR :
 number_of_sequences=10;         # Number of sequence generated
