@@ -1,5 +1,6 @@
 #! /usr/bin/env python3
 
+from ast import alias
 import sys
 import os 
 from Bio import pairwise2
@@ -25,36 +26,33 @@ def read_param_file() :
 				if words[0] == "file" :
 					dicParam["file"] = words[1]
 				elif words[0] == "number_of_sequences" :
-					dicParam["number_of_sequences"] = words[1]
+					dicParam["number_of_sequences"] = int(words[1])
 				elif words[0] == "minimum_length" :
-					dicParam["minimum_length"] = words[1]
+					dicParam["minimum_length"] = int(words[1])
 				elif words[0] == "maximum_length" :
-					dicParam["maximum_length"] = words[1]
+					dicParam["maximum_length"] = int(words[1])
 				elif words[0] == "filename" :
 					dicParam["filename"] = words[1]
 				elif words[0] == "treshold" :
-					dicParam["treshold"] = words[1]
+					dicParam["treshold"] = int(words[1])
 	return dicParam
 
 # Generates a fasta file containing nucleic acid sequences
-def fasta_gen(dicParam) :
+def fasta_gen(filename, nbSeq, minLen, maxLen) :
 	tablebase = 'ATCG'
-	filename = 'generated_sequences.fasta' # Name of fasta file generated
 	sequences = []
 
 	# Generation of fasta sequences
-	for i in range(int(dicParam["number_of_sequences"])) :
+	for i in range(nbSeq) :
 		seq = ''
-		for j in range(randint(int(dicParam["minimum_length"]), int(dicParam["maximum_length"]))) :
+		for j in range(randint(minLen, maxLen)) :
 			seq += tablebase[randint(0,3)]
-		sequences.append(seq) 
+		sequences.append(seq)
 
 	# Writing of generated sequences in fasta file
-	with open(dicParam["filename"], 'w+') as file :
+	with open(filename, 'w+') as file :
 		for i in range(len(sequences)) :
 			file.write(f">seq{i}\n{sequences[i]}\n")
-
-	return filename
 
 def GCcontent(seq) :
 	seqLen = len(seq)
@@ -70,27 +68,14 @@ def read_fasta(file) :
 		seq = ''
 		for line in f :
 			line = line.rstrip('\n')
-			if line.startswith('>') and seq != '' :
-				dicFasta[id] = {"sequence" : seq, "GCcontent" : GCcontent(seq)}
 			if line.startswith('>') :
+				seq = ''
 				id = line[1:]
+				continue
 			else :
 				seq += line
-	# print(dicFasta)
+			dicFasta[id] = {"sequence" : seq, "GCcontent" : GCcontent(seq)}
 	return dicFasta
-
-# # Reads and stores data from fasta file to dictionary
-# def read_fasta(file) :
-# 	dicFasta = {}
-# 	with open(file) as f :
-# 		for line in f :
-# 			line = line.rstrip('\n')
-# 			if line.startswith('>') :
-# 				id = line[1:]
-# 				dicFasta[id] = ''
-# 			else :
-# 				dicFasta[id] += line
-# 	return dicFasta
 
 def beautiful_print(result, seq1, seq2) :
 	maxSize = 80
@@ -102,25 +87,25 @@ def beautiful_print(result, seq1, seq2) :
 		os.makedirs("align")
 	with open(f"align/{seq1}_{seq2}.align", "w+") as f :
 		f.write(f"{seq1} - {seq2} result alignment :\n\n")
-		for i in range(x) :
+		for i in range(p) :
 			f.write(f"{result[0][i*maxSize:(i+1)*maxSize]}\n")
 			f.write(f"{result[1][i*maxSize:(i+1)*maxSize]}\n")
 			f.write(f"{result[2][i*maxSize:(i+1)*maxSize]}\n\n")
 		f.write(result[3])
 
 # Generates a graph from pairwise alignment of fasta sequences
-def graph(dicFasta) :
-	# nodes2draw = []
+def graph(dicFasta, treshold) :
+	nodes2draw = []
 	# edges2draw = []
 
-	for key in dicFasta.items() :
-		print(key[1]['GCcontent'])
-
 	G = nx.Graph()
-	# lstNodes = [(1,100), (2,600)]
-	G.add_node(1, weight=100)
-	G.add_node(2, weight=400)
+	# print(dicFasta)
+	for id in dicFasta.items() :
+		nodes2draw.append((id[0],id[1]["GCcontent"]))
+	
+	# for i in range(len(nodes2draw)) :
 	# G.add_nodes_from([(id, {'sequence': seq}) for (id, seq) in dicFasta.items()])
+
 	# lstID = list(dicFasta.keys())
 	# for i in range(len(lstID)) :
 	# 	for j in range(len(lstID)) :
@@ -133,9 +118,9 @@ def graph(dicFasta) :
 	# 					result = (pairwise2.format_alignment(*alignment)).split('\n')
 	# 					beautiful_print(result, lstID[i], lstID[j])
 
-	nx.draw(G, with_labels=True) #edgelist=edges2draw
-	nx.write_graphml(G, 'graph.graphml', encoding='utf-8', prettyprint=True, infer_numeric_types=False, named_key_ids=False)
-	plt.show()
+	# nx.draw(G, nodelist=nodes2draw, with_labels=True) #edgelist=edges2draw
+	# nx.write_graphml(G, 'graph.graphml', encoding='utf-8', prettyprint=True, infer_numeric_types=False, named_key_ids=False)
+	# plt.show()
 
 
 ### Script execution ###
@@ -145,16 +130,17 @@ if __name__ == '__main__' :
 
 	# If no fasta file is given in parameter
 	if dicParam["file"] == "None" :
-		file = fasta_gen(dicParam)
-		dicFasta = read_fasta(file)
+		fasta_gen(dicParam['filename'], dicParam['number_of_sequences'], dicParam['minimum_length'], dicParam['maximum_length'])
+		dicFasta = read_fasta(dicParam['filename'])
 
 	# If a fasta file is given in parameter
 	elif not dicParam["file"] == "None" and os.path.exists(dicParam["file"]) :
 		dicFasta = read_fasta(dicParam["file"])
 
+	# Error
 	else :
 		print(help())
 		exit(1)
 
 	# Creation and visualization of graph
-	graph(dicFasta)
+	graph(dicFasta, dicParam['treshold'])
