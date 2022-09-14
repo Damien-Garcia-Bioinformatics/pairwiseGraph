@@ -1,0 +1,71 @@
+seq3 - seq18 result alignment :
+
+TC--A--GC-CA-T---T----T--CA-G-AAATG--GCCA-C-CAGCACACACTTTTCC-CCG-TTCACG-CGTGTAG-
+ |  |  || |  |   |    |  || | |||||  |    | |||    ||   ||   ||  || ||  | ||||  
+-CTTAAAGCTC-CTGGCTGCGGTTTCATGGAAATGTTG---TCTCAG----CA---TT--GCC-ATT-AC-AC-TGTA-C
+
+A-ACCGGCA--GCT-C-CGGATT-TTGTA-AAT-AA--A---TCG-CGT-CC-AACACC-TAA-AT--T--TCCTGATTC
+| |     |  | | | ||| || || |  ||| ||  |   ||  ||  || || | | |   ||  |  |||  | | 
+ATA-----ATTG-TGCGCGG-TTATT-T-GAATCAAGGAACATC-ACG-GCCTAA-A-CGT--CATGCTACTCC--A-T-
+
+TCGGCGTC-GAT--G--CC--ACATA--CCGCGAGCC---CT-G--GG-CCAT-ACGATCG-CGCGGTGGCCAC-TAATG
+| || | | | |  |  ||  || |   || | |  |   || |  || || | || | |  | |  ||||||| ||| |
+T-GG-G-CTG-TTTGTACCGTAC-T-TGCC-C-A--CTGGCTAGTTGGTCC-TTAC-A-C-AC-C--TGGCCACATAA-G
+
+TTCCAGATATACAAGGTGCCATA--A-T-TGGTCACCTTTTGGATTAAACCC-C-A-A-GTTGTG--GCCTACTTTA--C
+    | || |     ||  |     | | | || | |     |  |   ||| | | | |  | |  |  |||   |  |
+----A-AT-T-----GT--C---GGAGTCT-GT-A-C-----G--T---CCCTCGAGACG--G-GAAG--TAC---AATC
+
+TACCTGGTGTTACCTCGTCTACCCACTTATCAGACGTCGACTGGATTAAATCTGACCAAAGATTGTCCGGGTCCTACGA-
+|| | |||| |   |  || |   |   ||    || | |||||       | |     ||   ||||   |||||  | 
+TA-C-GGTG-T---T--TC-A---A---AT----CG-C-ACTGG-------C-G-----AG---GTCC---TCCTA--AA
+
+C--GCTG-AT----GTCCCGATCTG-ACC-TT-C-CTTT-AG-A----TA-A--AATTAT--C----T--ATGGC--GG-
+|  | || ||    |||||  |||| |   || | | || || |    || |  ||  |   |    |  ||||   || 
+CAAG-TGCATATACGTCCC--TCTGTA--GTTGCAC-TTGAGCACAAATACAGGAA--A-GACGGCCTGCATGG-TAGGA
+
+--GGCA-A--AG--TATC-CA--A-ACGGCGTATT-TCGCGTTGGACA-GCGCCCG-AGCGGAG--AGTTCTG--CA-GG
+  || | |  ||  | |  |   | || ||| ||| |  |||| | || | |   | |||  |   || ||||  || ||
+ACGG-ATACGAGCCT-T-GC-GGACAC-GCG-ATTAT--CGTT-G-CATG-G---GTAGC--A-CTAG-TCTGGTCACGG
+
+ACCGAC-CATT-CATG---A-CAC-TTCGTGT-CGAT-TAGATTTCCAAGGAA-CTCG-T--TC-CC--T-CG--C-CTG
+|  |   |  | | ||   | ||  ||| | | ||   | ||   || | | | | |  |  || ||  | ||  | |||
+A--G--GC--TGC-TGTTTAGCA-GTTC-T-TGCG--CT-GA---CC-A-G-AGC-C-CTCCTCACCAGTGCGGGCACTG
+
+C---GAA--ACTC-TGC--GT---A-T----A--CGGAGGATTAGC-ATGATC-G---C--CGT-TTC--AGTAG-GCGT
+|   |    |||  |||  ||   | |    |  ||| ||   | | |  ||  |   |  | | ||   ||| | || |
+CCTCG--GTACT-GTGCTAGTCCCAATGGGCAGGCGG-GG---A-CCA--AT-TGTTACAAC-TGTT-GGAGT-GTGC-T
+
+-GAACATACACACTGA--T-----C-CTT-CTA-TCCA-G---AA-GCGCTTTTTTTGCGT-TTGATACG----CTACT-
+ ||| | | | |   |  |     | | | | | | || |   || | ||        |   |||| | |    ||||  
+AGAA-A-A-A-A---AAGTAAAAACGC-TAC-AGT-CATGTGGAAAG-GC--------C--CTTGA-A-GGAATCTAC-A
+
+GT-TCGGAGGCGA--GTTTA-AGG-AGCTCAAGAT-CCT-TGC--AACCGT-A--A---TGC-T-GTGGAA--TCAGT-C
+|  |  |||| |   ||||| |   |||||  |   ||  |||  ||  |  |  |   ||  | |||| |  |  || |
+G-AT--GAGG-G-TTGTTTATA--TAGCTC--G--GCC-GTGCGCAA--G-CAGGACGGTG-GTTGTGG-AGGT--GTGC
+
+AATGACCAGCCGTAAT-CGTTCA---C-G-AAG-TGCG-TTT-T-A---CAAC--TC--T--C--TAGCATCACC-GT-A
+  ||    |  ||  | |  | |   | | ||| | || ||| | |   |||   ||  |  |  ||| |  | | || |
+--TG----G--GT--TAC--T-AAGTCTGTAAGCT-CGCTTTCTTAGTACAA-AATCAATGACACTAG-A--A-CTGTCA
+
+--GA-GGCGCT-C--GG--CG-----CT--ACACCTGCTGGTCGTT-GTACG-ACTGTTCATT-TC-TT-T-CCCAGTTA
+  || || | | |  ||  ||     ||  | |||  ||  | | | ||| | | ||  || | |  || | |||| || 
+ATGATGG-G-TTCATGGGTCGGAGGGCTTGA-ACC--CT--T-G-TAGTA-GGA-TG--CA-TGT-ATTCTACCCA-TT-
+
+GAGTATCAT--T-G--CCAG--AATTTCCTACGCATCC-CATGGATACGGTTG---GAC-AC-GTTGATCTCGCTGATA-
+   | || |  | |  ||||  || || ||    ||   ||| | |    ||    ||| || ||| |    ||| | | 
+---T-TC-TGGTTGTGCCAGGGAA-TT-CT----AT--GCAT-G-T----TT-ATCGACCACAGTT-A----GCT-A-AC
+
+TG--AGATACC-TTC-GATAGGCGCATCC-TAATCGATGCCAAACT--GATTCCGATGGGCT-AGCACTCTTC-TTGAA-
+|   | ||||| ||  | ||    |  || | ||   |   ||||   |  ||||||  ||| || || |||  |||   
+T-CCA-ATACCCTT-TG-TA----C--CCGT-AT---T---AAAC-CCG--TCCGAT--GCTGAG-AC-CTT-ATTG--T
+
+CATAG-G-TCGGACGAA-GATTGCTCG-AGCT-TCTACA--GAACCATCCG-G-TCC-TCATCCT--ACTGGCGGA-AC-
+| | | | ||  | | | ||  || || ||   | |||   |  || | || | |   ||||  |  |||  |  | || 
+C-T-GAGATC--A-G-ATGA--GC-CGCAG--AT-TAC-CTG--CC-T-CGCGAT--ATCAT--TGTACT--C--ACACA
+
+CGTT--GCG--G---GT-AGGAT-
+| ||  |||  |   || | | | 
+C-TTATGCGTCGCCCGTCA-G-TA
+
+  Score=633

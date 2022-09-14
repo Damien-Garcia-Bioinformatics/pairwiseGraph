@@ -1,6 +1,5 @@
 #! /usr/bin/env python3
 
-from ast import alias
 import sys
 import os 
 from Bio import pairwise2
@@ -34,7 +33,7 @@ def read_param_file() :
 				elif words[0] == "filename" :
 					dicParam["filename"] = words[1]
 				elif words[0] == "treshold" :
-					dicParam["treshold"] = int(words[1])
+					dicParam["treshold"] = float(words[1])
 	return dicParam
 
 # Generates a fasta file containing nucleic acid sequences
@@ -94,17 +93,34 @@ def beautiful_print(result, seq1, seq2) :
 		f.write(result[3])
 
 # Generates a graph from pairwise alignment of fasta sequences
-def graph(dicFasta, treshold) :
+def graph_gen(dicFasta, treshold) :
 	nodes2draw = []
-	# edges2draw = []
+	edges2draw = []
 
 	G = nx.Graph()
-	# print(dicFasta)
+
+	# for id in dicFasta.items() :
+	# 	nodes2draw.append((id[0], id[1]["GCcontent"]))
+
 	for id in dicFasta.items() :
-		nodes2draw.append((id[0],id[1]["GCcontent"]))
-	
+		G.add_nodes_from(dicFasta.keys())
+
 	# for i in range(len(nodes2draw)) :
 	# G.add_nodes_from([(id, {'sequence': seq}) for (id, seq) in dicFasta.items()])
+
+	lstID = list(dicFasta)
+	for i in range(len(lstID)) :
+		for j in range(len(lstID)) :
+			if not i >= j :
+				minScore = max(len(dicFasta[lstID[i]]['sequence']), len(dicFasta[lstID[j]]['sequence']))*treshold
+				alignments = pairwise2.align.globalxx(dicFasta[lstID[i]]['sequence'],
+													  dicFasta[lstID[j]]['sequence'],
+													  one_alignment_only=True)
+				if alignments[0][2] > minScore :
+					edges2draw.append((lstID[i], lstID[j], alignments[0][2]))
+					for alignment in alignments :
+						result = (pairwise2.format_alignment(*alignment)).split('\n')
+						beautiful_print(result, lstID[i], lstID[j])
 
 	# lstID = list(dicFasta.keys())
 	# for i in range(len(lstID)) :
@@ -117,6 +133,11 @@ def graph(dicFasta, treshold) :
 	# 				for alignment in alignments :
 	# 					result = (pairwise2.format_alignment(*alignment)).split('\n')
 	# 					beautiful_print(result, lstID[i], lstID[j])
+
+	pos = nx.spring_layout(G)
+	nx.draw(G, pos, edgelist=edges2draw, with_labels=True) # nodelist=nodes2draw,
+	nx.write_graphml(G, 'pairwise.graphml', encoding='utf-8', prettyprint=True, named_key_ids=False)
+	plt.show()
 
 	# nx.draw(G, nodelist=nodes2draw, with_labels=True) #edgelist=edges2draw
 	# nx.write_graphml(G, 'graph.graphml', encoding='utf-8', prettyprint=True, infer_numeric_types=False, named_key_ids=False)
@@ -143,4 +164,4 @@ if __name__ == '__main__' :
 		exit(1)
 
 	# Creation and visualization of graph
-	graph(dicFasta, dicParam['treshold'])
+	graph_gen(dicFasta, dicParam['treshold'])
