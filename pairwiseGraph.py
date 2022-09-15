@@ -1,12 +1,19 @@
 #! /usr/bin/env python3
 
-import sys
+# Script Programming Project
+# GARCIA Damien, M2BB
+
+# Please consider reading the README file for detailed explanation of the code.
+
+### Library imports ###
+
 import os 
 from Bio import pairwise2
 from Bio.pairwise2 import format_alignment
 from random import randint
-import networkx as nx
+from netgraph import Graph
 import matplotlib.pyplot as plt
+
 
 ### Functions ###
 
@@ -14,6 +21,8 @@ def help() :
 	terminalSize = os.get_terminal_size()
 	print(terminalSize)
 
+
+# Extracts parameters from a plain text file and returns a dictionary
 def read_param_file() :
 	dicParam = {}
 	with open("script_parameters.txt") as paramFile :
@@ -36,6 +45,7 @@ def read_param_file() :
 					dicParam["treshold"] = float(words[1])
 	return dicParam
 
+
 # Generates a fasta file containing nucleic acid sequences
 def fasta_gen(filename, nbSeq, minLen, maxLen) :
 	tablebase = 'ATCG'
@@ -53,6 +63,8 @@ def fasta_gen(filename, nbSeq, minLen, maxLen) :
 		for i in range(len(sequences)) :
 			file.write(f">seq{i}\n{sequences[i]}\n")
 
+
+# Calculates the percentage of GC in nucleic acid sequence
 def GCcontent(seq) :
 	seqLen = len(seq)
 	count = 0
@@ -61,6 +73,8 @@ def GCcontent(seq) :
 			count += 1
 	return ((count/seqLen)*100)
 
+
+# Reads a fasta file and creates a dictionary containing ID, sequence, and GC percentage of every entry
 def read_fasta(file) :
 	dicFasta = {}
 	with open(file) as f :
@@ -76,6 +90,8 @@ def read_fasta(file) :
 			dicFasta[id] = {"sequence" : seq, "GCcontent" : GCcontent(seq)}
 	return dicFasta
 
+
+# Prints alignment results in a plain text format file. Every alignment is systematicaly named and stored in 'align' directory
 def beautiful_print(result, seq1, seq2) :
 	maxSize = 80
 	p = len(result[0]) // maxSize
@@ -92,60 +108,64 @@ def beautiful_print(result, seq1, seq2) :
 			f.write(f"{result[2][i*maxSize:(i+1)*maxSize]}\n\n")
 		f.write(result[3])
 
-# Generates a graph from pairwise alignment of fasta sequences
+
+# 
+def colors_RGBA(weight, treshold) :
+	if weight > treshold :
+		R = weight
+		G = 0
+		B = 1 - R
+		A = pow(weight,4)
+		return [R,G,B,1]
+	return [1,1,1,0]
+
+
+#
 def graph_gen(dicFasta, treshold) :
+	# Creates nodes weighted by GCcontent
 	nodes2draw = []
-	edges2draw = []
-
-	G = nx.Graph()
-
-	# for id in dicFasta.items() :
-	# 	nodes2draw.append((id[0], id[1]["GCcontent"]))
-
 	for id in dicFasta.items() :
-		G.add_nodes_from(dicFasta.keys())
-
-	# for i in range(len(nodes2draw)) :
-	# G.add_nodes_from([(id, {'sequence': seq}) for (id, seq) in dicFasta.items()])
-
+		nodes2draw.append((id[0], id[1]['GCcontent']))
+	
+	# Creates edges weighted by percentage of alignments between sequences
+	seqLen = []
+	edges2draw = []
 	lstID = list(dicFasta)
 	for i in range(len(lstID)) :
 		for j in range(len(lstID)) :
-			if not i >= j :
-				minScore = max(len(dicFasta[lstID[i]]['sequence']), len(dicFasta[lstID[j]]['sequence']))*treshold
+			if i < j :
 				alignments = pairwise2.align.globalxx(dicFasta[lstID[i]]['sequence'],
 													  dicFasta[lstID[j]]['sequence'],
 													  one_alignment_only=True)
-				if alignments[0][2] > minScore :
-					edges2draw.append((lstID[i], lstID[j], alignments[0][2]))
-					for alignment in alignments :
-						result = (pairwise2.format_alignment(*alignment)).split('\n')
-						beautiful_print(result, lstID[i], lstID[j])
+				edges2draw.append((lstID[i], lstID[j], alignments[0][2]))
 
-	# lstID = list(dicFasta.keys())
-	# for i in range(len(lstID)) :
-	# 	for j in range(len(lstID)) :
-	# 		if not i >= j :
-	# 			treshold = int((max(len(dicFasta[lstID[i]]), len(dicFasta[lstID[j]]))) * 0.61)
-	# 			alignments = pairwise2.align.globalxx(dicFasta[lstID[i]], dicFasta[lstID[j]], one_alignment_only=True)
-	# 			if alignments[0][2] > treshold :
-	# 				G.add_edge(lstID[i], lstID[j], weight=alignments[0][2])
-	# 				for alignment in alignments :
-	# 					result = (pairwise2.format_alignment(*alignment)).split('\n')
-	# 					beautiful_print(result, lstID[i], lstID[j])
+				# Writes alignments in plain text format files, in directory 'align/'
+				for alignment in alignments :
+					result = (pairwise2.format_alignment(*alignment)).split('\n')
+					beautiful_print(result, lstID[i], lstID[j])
+				
+				# List containing length of longest sequence between the two sequences used for pairwise alignment
+				seqLen.append(max(len(dicFasta[lstID[i]]['sequence']), len(dicFasta[lstID[j]]['sequence'])))
 
-	pos = nx.kamada_kawai_layout(G)
-	# , nodelist=nodes2draw
-	nx.draw_networkx(G, pos, edgelist=edges2draw, with_labels=True)
-	nx.write_graphml(G, 'pairwise.graphml', encoding='utf-8', prettyprint=True, named_key_ids=False)
+	# Graph parameters tweaks and tricks
+	weights = []
+	edgesColor = {}
+	edgesAlpha = {}
+	for i in range(len(edges2draw)) :
+		weights.append((edges2draw[i][2]/seqLen[i]))
+		edgesColor[edges2draw[i][0], edges2draw[i][1]] = colors_RGBA(weights[i], treshold)
+		if weights[i] < treshold :
+			edgesAlpha[edges2draw[i][0], edges2draw[i][1]] = 0
+		else :
+			edgesAlpha[edges2draw[i][0], edges2draw[i][1]] = 1
+
+	# Graph generation
+	Graph(edges2draw, edge_alpha=edgesAlpha, edge_color=edgesColor, node_layout='circular', edge_layout='curved')
 	plt.show()
-
-	# nx.draw(G, nodelist=nodes2draw, with_labels=True) #edgelist=edges2draw
-	# nx.write_graphml(G, 'graph.graphml', encoding='utf-8', prettyprint=True, infer_numeric_types=False, named_key_ids=False)
-	# plt.show()
 
 
 ### Script execution ###
+
 if __name__ == '__main__' :
 	# Extraction of parameters from "script_parameters.txt"
 	dicParam = read_param_file()
