@@ -1,1 +1,4 @@
-/align
+#Directories to ignore :
+/align/*
+
+#Files to ignore :
