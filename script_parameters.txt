@@ -12,9 +12,9 @@ file=None;                      # If 'None', the sequence generator will be used
 
 # SEQUENCE GENERATOR :
 number_of_sequences=10;         # Number of sequence generated
-minimum_length=500;             # Minimum length of generated sequence
+minimum_length=100;             # Minimum length of generated sequence
 maximum_length=1000;            # Should be higher than miminum length
 filename=seqGen.fasta;          # Name of file where generated sequence will be stored
 
 # GRAPH GENERATOR :
-treshold=0.61;                    # Minimum %identity between sequence for which alignment result is stored
+treshold=0.55;                    # Minimum %identity between sequence for which alignment result is stored

@@ -115,22 +115,21 @@ def colors_RGBA(weight, treshold) :
 		R = weight
 		G = 0
 		B = 1 - R
-		A = pow(weight,4)
 		return [R,G,B,1]
 	return [1,1,1,0]
 
 
+
 #
 def graph_gen(dicFasta, treshold) :
-	# Creates nodes weighted by GCcontent
-	nodes2draw = []
-	for id in dicFasta.items() :
-		nodes2draw.append((id[0], id[1]['GCcontent']))
+	lstID = list(dicFasta) # List of nodes name
+
+
+
 	
 	# Creates edges weighted by percentage of alignments between sequences
 	seqLen = []
 	edges2draw = []
-	lstID = list(dicFasta)
 	for i in range(len(lstID)) :
 		for j in range(len(lstID)) :
 			if i < j :
@@ -147,7 +146,12 @@ def graph_gen(dicFasta, treshold) :
 				# List containing length of longest sequence between the two sequences used for pairwise alignment
 				seqLen.append(max(len(dicFasta[lstID[i]]['sequence']), len(dicFasta[lstID[j]]['sequence'])))
 
-	# Graph parameters tweaks and tricks
+	# Nodes parameters
+	nodesAlpha = {}
+	for i in range(len(lstID)) :
+		nodesAlpha[lstID[i]] = (dicFasta[lstID[i]]['GCcontent'] / 100)*8 
+
+	# Edges parameters
 	weights = []
 	edgesColor = {}
 	edgesAlpha = {}
@@ -157,10 +161,22 @@ def graph_gen(dicFasta, treshold) :
 		if weights[i] < treshold :
 			edgesAlpha[edges2draw[i][0], edges2draw[i][1]] = 0
 		else :
-			edgesAlpha[edges2draw[i][0], edges2draw[i][1]] = 1
+			edgesAlpha[edges2draw[i][0], edges2draw[i][1]] = colors_RGBA(weights[i], treshold)[2]
 
 	# Graph generation
-	Graph(edges2draw, edge_alpha=edgesAlpha, edge_color=edgesColor, node_layout='circular', edge_layout='curved')
+	Graph(	edges2draw,
+			edge_color=edgesColor,
+			edge_alpha=edgesAlpha,
+			edge_layout='curved',
+			node_layout='circular',
+			node_color='seagreen',
+			#node_alpha=nodesAlpha,
+			node_size=nodesAlpha,
+			node_edge_width=0,
+			node_labels=True, 
+			node_label_fontdict=dict(size=10),
+			node_label_offset=0.1
+	)
 	plt.show()
 
 
