@@ -134,8 +134,9 @@ def graph_gen(dicFasta, treshold) :
 	# 					result = (pairwise2.format_alignment(*alignment)).split('\n')
 	# 					beautiful_print(result, lstID[i], lstID[j])
 
-	pos = nx.spring_layout(G)
-	nx.draw(G, pos, edgelist=edges2draw, with_labels=True) # nodelist=nodes2draw,
+	pos = nx.kamada_kawai_layout(G)
+	# , nodelist=nodes2draw
+	nx.draw_networkx(G, pos, edgelist=edges2draw, with_labels=True)
 	nx.write_graphml(G, 'pairwise.graphml', encoding='utf-8', prettyprint=True, named_key_ids=False)
 	plt.show()
 
