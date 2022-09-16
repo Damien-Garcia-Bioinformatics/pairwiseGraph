@@ -145,7 +145,7 @@ def graph_gen(dicFasta, treshold) :
 	# Nodes parameters
 	nodesSize = {}
 	for i in range(len(lstID)) :
-		nodesSize[lstID[i]] = pow((0.5+(dicFasta[lstID[i]]['GCcontent'] / 100))*4,1)
+		nodesSize[lstID[i]] = (0.5+(dicFasta[lstID[i]]['GCcontent'] / 100))*4
 
 	# Edges parameters
 	weights = []

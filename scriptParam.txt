@@ -25,4 +25,4 @@ filename=seqGen.fasta;          # Name of file where generated sequence will be 
 
 # GRAPH GENERATOR :
 treshold=0.55;                	# Minimum %identity between sequence for which alignment 
-								# result is stored
+								# result is stored (float in [0,1])
