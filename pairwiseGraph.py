@@ -61,7 +61,7 @@ def fasta_gen(filename, nbSeq, minLen, maxLen) :
 	# Writing of generated sequences in fasta file
 	with open(filename, 'w+') as file :
 		for i in range(len(sequences)) :
-			file.write(f">seq{i}\n{sequences[i]}\n")
+			file.write(f">random{i}\n{sequences[i]}\n")
 
 
 # Calculates the percentage of GC in nucleic acid sequence
@@ -109,23 +109,19 @@ def beautiful_print(result, seq1, seq2) :
 		f.write(result[3])
 
 
-# 
+# Creates a 
 def colors_RGBA(weight, treshold) :
-	if weight > treshold :
-		R = weight
-		G = 0
-		B = 1 - R
-		return [R,G,B,1]
-	return [1,1,1,0]
+	R = min((weight*(1/treshold)-(2*treshold)),1)
+	G = 0
+	B = 1 - R
+	A = R 
+	return [R,G,B,A]
 
 
 
 #
 def graph_gen(dicFasta, treshold) :
 	lstID = list(dicFasta) # List of nodes name
-
-
-
 	
 	# Creates edges weighted by percentage of alignments between sequences
 	seqLen = []
@@ -147,35 +143,37 @@ def graph_gen(dicFasta, treshold) :
 				seqLen.append(max(len(dicFasta[lstID[i]]['sequence']), len(dicFasta[lstID[j]]['sequence'])))
 
 	# Nodes parameters
-	nodesAlpha = {}
+	nodesSize = {}
 	for i in range(len(lstID)) :
-		nodesAlpha[lstID[i]] = (dicFasta[lstID[i]]['GCcontent'] / 100)*8 
+		nodesSize[lstID[i]] = pow((0.5+(dicFasta[lstID[i]]['GCcontent'] / 100))*4,1)
 
 	# Edges parameters
 	weights = []
 	edgesColor = {}
 	edgesAlpha = {}
 	for i in range(len(edges2draw)) :
-		weights.append((edges2draw[i][2]/seqLen[i]))
+		weights.append((edges2draw[i][2]/seqLen[i])) #Poids entre 0 et 1
 		edgesColor[edges2draw[i][0], edges2draw[i][1]] = colors_RGBA(weights[i], treshold)
-		if weights[i] < treshold :
-			edgesAlpha[edges2draw[i][0], edges2draw[i][1]] = 0
-		else :
-			edgesAlpha[edges2draw[i][0], edges2draw[i][1]] = colors_RGBA(weights[i], treshold)[2]
+		if edgesColor[edges2draw[i][0],edges2draw[i][1]][3] < 0 :		# Case where weight < treshold
+			edgesColor[edges2draw[i][0],edges2draw[i][1]] = [0,0,0,0]
+			edgesAlpha[edges2draw[i][0],edges2draw[i][1]] = 0 
+		else :															# Case where weight >= treshold
+			edgesAlpha[edges2draw[i][0],edges2draw[i][1]] = 0.7
+
 
 	# Graph generation
-	Graph(	edges2draw,
-			edge_color=edgesColor,
-			edge_alpha=edgesAlpha,
-			edge_layout='curved',
-			node_layout='circular',
-			node_color='seagreen',
-			#node_alpha=nodesAlpha,
-			node_size=nodesAlpha,
-			node_edge_width=0,
-			node_labels=True, 
-			node_label_fontdict=dict(size=10),
-			node_label_offset=0.1
+	Graph(
+		edges2draw,
+		edge_color=edgesColor,
+		edge_alpha=edgesAlpha,
+		edge_layout='curved',
+		node_layout='circular',
+		node_color='mediumpurple',
+		node_size=nodesSize,
+		node_edge_width=0.5,
+		node_labels=True, 
+		node_label_fontdict=dict(size=8),
+		node_label_offset=0.14
 	)
 	plt.show()
 
