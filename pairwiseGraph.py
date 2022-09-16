@@ -25,7 +25,7 @@ def help() :
 # Extracts parameters from a plain text file and returns a dictionary
 def read_param_file() :
 	dicParam = {}
-	with open("script_parameters.txt") as paramFile :
+	with open("pairwiseGraph.param") as paramFile :
 		for line in paramFile :
 			line = line.rstrip('\n')
 			if not line.startswith('#') :
