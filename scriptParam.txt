@@ -12,7 +12,7 @@
 
 
 # SEQUENCE TO USE :
-file=exampleSequences.fasta;	# Write 'None' if you want to use the sequence generator or a
+file=exampleSequences.fasta;	# 'None' if you want to use the sequence generator or a
 								# file in command line parameter
 
 
