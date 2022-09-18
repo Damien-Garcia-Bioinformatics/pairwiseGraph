@@ -20,8 +20,7 @@ from matplotlib import pyplot
 ### Functions ###
 
 def help() :
-	terminalSize = os.get_terminal_size()
-	print(terminalSize)
+	print(' This script uses fasta file as ')
 	exit(1)
 
 
@@ -201,7 +200,7 @@ if __name__ == '__main__' :
 	# Extraction of parameters from "script_parameters.txt"
 	dicParam = read_param_file()
 
-	# If fasta file is given in command line parameter
+	# If a fasta file is given in command line parameter
 	if len(sys.argv) == 2 and os.path.exists(sys.argv[1]) :
 		dicFasta = read_fasta(sys.argv[1])
 
@@ -209,7 +208,7 @@ if __name__ == '__main__' :
 	elif not dicParam["file"] == "None" and os.path.exists(dicParam["file"]):
 		dicFasta = read_fasta(dicParam["file"])
 
-	# If no fasta file is given in parameter
+	# If no fasta file is provided
 	elif dicParam["file"] == "None" :
 		fasta_gen(dicParam['filename'], dicParam['number_of_sequences'], dicParam['minimum_length'], dicParam['maximum_length'])
 		dicFasta = read_fasta(dicParam['filename'])
