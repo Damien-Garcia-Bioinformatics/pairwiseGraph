@@ -20,7 +20,8 @@ from matplotlib import pyplot
 ### Functions ###
 
 def help() :
-	print(' This script uses fasta file as ')
+	print("Fasta file not found")
+	print("Go to : https://github.com/Damien-Garcia-Bioinformatics/pairwiseGraph for more informations")
 	exit(1)
 
 
