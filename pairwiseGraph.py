@@ -14,7 +14,7 @@ from Bio import pairwise2
 from Bio.pairwise2 import format_alignment
 from random import randint
 from netgraph import Graph
-from matplotlib import pyplot, gridspec
+from matplotlib import pyplot
 
 
 ### Functions ###
@@ -193,7 +193,7 @@ def graph_gen(dicFasta, treshold, saveAlign) :
 	pyplot.tight_layout()
 	pyplot.savefig('generated_graph.png', format='png')
 	pyplot.show()
-	
+
 
 ### Script execution ###
 
