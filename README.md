@@ -4,36 +4,49 @@ Script programming project in 2nd year of Master's Degree.
 ### What is pairwiseGraph?
 This script aims to generate a graph to easily visualize pairwise alignment distances between sequences.
 
+
 ## Results format
 ### Graph result example
 ![Graph result image](https://github.com/Damien-Garcia-Bioinformatics/pairwiseGraph/blob/main/generated_graph.png)
 
-Every node represent a sequence and every edge is the alignment score.
+- Every node represent a sequence and every edge is the alignment score.
 
-The node size varies with percentage of 'G' and 'C' bases throughout the sequence. The minimum and maximum size of a node is represented by minGC and maxGC.
+- The node size varies with percentage of 'G' and 'C' bases throughout the sequence. The minimum and maximum size of a node is represented by minGC and maxGC.
 
-The visible edges on the graph are the ones that score higher than the choosen treshold. The color goes from blue to red to represent the actual alignment score. If the edge is blue, the alignment score is near the treshold score. The edge is red if the alignment score is near 100% which can be seen with the edge exactAlign1 - exactAlign2.
+- The visible edges on the graph are the ones that score higher than the choosen treshold. The color goes from blue to red to represent the actual alignment score. If the edge is blue, the alignment score is near the treshold score. The edge is red if the alignment score is near 100% which can be seen with the edge exactAlign1 - exactAlign2.
+
 
 ## How to use the script?
 
+To execute the script, multiple ways to provide a fasta file are at your disposition.
+- Provide a file name in 'scriptParam.txt'. After cloning the repository, parameters are set to execute the script with the example sequences.
+This option was created for non-programmers users to be able to easily use this script and tweak the options without having to look through the code.
+
+- Provide a file name through command line parameter : This method will override every other parameters. This is the prefered option if you want to use this script inside of a pipeline.
+
+- If no file is provided to the script, random sequences are generated. You can change the parameters of the random sequence generator in the 'scriptParam.txt' file.
+
 ### Installation
+
 ```bash
 git clone https://github.com/Damien-Garcia-Bioinformatics/pairwiseGraph.git
 pip install -r requirements
 python3 pairwiseGraph.py [file]
 ```
 
-### Code explanation
-
 
 ## Roadmap
+### Done
 - [x] Fasta reader function
 - [x] Construction of dictionary structure containing fasta sequence data
 - [x] GCcontent calculation function
 - [x] Graph construction considering GCcontent and pairwise distance values
 - [x] Function to save alignments files
 - [x] File containing script parameters
+### Work in progress
 - [ ] Caption and graph legend
+- [ ] Add parameters and options to tweak script execution (having the option to change the name of generated graph, etc)
+
 
 ## Requirements
 Running the script requires matplotlib, pyqt5, netgraph, biopython and sub-requirements from previously cited libraries.
@@ -41,6 +54,7 @@ Running the script requires matplotlib, pyqt5, netgraph, biopython and sub-requi
 You can use ``` pip install matplotlib pyqt5 netgraph bio ``` or ```pip install -r requirements.txt``` to install everything needed to run the script.
 
 ### Full list of requirements
+
 ```bash
 bio==1.4.0
 biopython==1.79
