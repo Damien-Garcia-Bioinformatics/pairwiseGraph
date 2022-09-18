@@ -3,16 +3,18 @@
 # Script Programming Project
 # GARCIA Damien, M2BB
 
-# Please consider reading the README file for detailed explanation of the code.
+# Please consider reading the README file for explanation of the code.
+
 
 ### Library imports ###
 
-import os 
+import os
+import sys
 from Bio import pairwise2
 from Bio.pairwise2 import format_alignment
 from random import randint
 from netgraph import Graph
-import matplotlib.pyplot as plt
+from matplotlib import pyplot, gridspec
 
 
 ### Functions ###
@@ -20,6 +22,7 @@ import matplotlib.pyplot as plt
 def help() :
 	terminalSize = os.get_terminal_size()
 	print(terminalSize)
+	exit(1)
 
 
 # Extracts parameters from a plain text file and returns a dictionary
@@ -33,16 +36,28 @@ def read_param_file() :
 				words = words[0].split('=')
 				if words[0] == "file" :
 					dicParam["file"] = words[1]
+					continue
 				elif words[0] == "number_of_sequences" :
 					dicParam["number_of_sequences"] = int(words[1])
+					continue
 				elif words[0] == "minimum_length" :
 					dicParam["minimum_length"] = int(words[1])
+					continue
 				elif words[0] == "maximum_length" :
 					dicParam["maximum_length"] = int(words[1])
+					continue
 				elif words[0] == "filename" :
 					dicParam["filename"] = words[1]
+					continue
+				elif words[0] == "save_alignment_files" :
+					if words[1] == 'Yes' :
+						dicParam["save_alignment_files"] = True
+						continue
+					dicParam["save_alignment_files"] = False
+					continue
 				elif words[0] == "treshold" :
 					dicParam["treshold"] = float(words[1])
+					continue
 	return dicParam
 
 
@@ -109,18 +124,17 @@ def beautiful_print(result, seq1, seq2) :
 		f.write(result[3])
 
 
-# Creates a 
+# Generates RGBA color format considering weight and treshold parameters.
 def colors_RGBA(weight, treshold) :
-	R = min((weight*(1/treshold)-(2*treshold)),1)
+	R = min((weight*(1/treshold)-(2*treshold)), 1)
 	G = 0
 	B = 1 - R
-	A = R 
+	A = R
 	return [R,G,B,A]
 
 
-
-#
-def graph_gen(dicFasta, treshold) :
+# Generates a graph visualization of pairwise sequence alignments.
+def graph_gen(dicFasta, treshold, saveAlign) :
 	lstID = list(dicFasta) # List of nodes name
 	
 	# Creates edges weighted by percentage of alignments between sequences
@@ -129,15 +143,17 @@ def graph_gen(dicFasta, treshold) :
 	for i in range(len(lstID)) :
 		for j in range(len(lstID)) :
 			if i < j :
-				alignments = pairwise2.align.globalxx(dicFasta[lstID[i]]['sequence'],
-													  dicFasta[lstID[j]]['sequence'],
-													  one_alignment_only=True)
+				alignments = pairwise2.align.globalxx(
+					dicFasta[lstID[i]]['sequence'],
+					dicFasta[lstID[j]]['sequence'],
+					one_alignment_only=True)
 				edges2draw.append((lstID[i], lstID[j], alignments[0][2]))
 
 				# Writes alignments in plain text format files, in directory 'align/'
-				for alignment in alignments :
-					result = (pairwise2.format_alignment(*alignment)).split('\n')
-					beautiful_print(result, lstID[i], lstID[j])
+				if saveAlign :
+					for alignment in alignments :
+						result = (pairwise2.format_alignment(*alignment)).split('\n')
+						beautiful_print(result, lstID[i], lstID[j])
 				
 				# List containing length of longest sequence between the two sequences used for pairwise alignment
 				seqLen.append(max(len(dicFasta[lstID[i]]['sequence']), len(dicFasta[lstID[j]]['sequence'])))
@@ -158,7 +174,7 @@ def graph_gen(dicFasta, treshold) :
 			edgesColor[edges2draw[i][0],edges2draw[i][1]] = [0,0,0,0]
 			edgesAlpha[edges2draw[i][0],edges2draw[i][1]] = 0 
 		else :															# Case where weight >= treshold
-			edgesAlpha[edges2draw[i][0],edges2draw[i][1]] = 0.7
+			edgesAlpha[edges2draw[i][0],edges2draw[i][1]] = 0.8
 
 
 	# Graph generation
@@ -172,11 +188,12 @@ def graph_gen(dicFasta, treshold) :
 		node_size=nodesSize,
 		node_edge_width=0.5,
 		node_labels=True, 
-		node_label_fontdict=dict(size=8),
-		node_label_offset=0.14
-	)
-	plt.show()
-
+		node_label_fontdict=dict(size=9),
+		node_label_offset=0.14)
+	pyplot.tight_layout()
+	pyplot.savefig('generated_graph.png', format='png')
+	pyplot.show()
+	
 
 ### Script execution ###
 
@@ -184,19 +201,22 @@ if __name__ == '__main__' :
 	# Extraction of parameters from "script_parameters.txt"
 	dicParam = read_param_file()
 
+	# If fasta file is given in command line parameter
+	if len(sys.argv) == 2 and os.path.exists(sys.argv[1]) :
+		dicFasta = read_fasta(sys.argv[1])
+
+	# If a fasta file is given in script parameter file
+	elif not dicParam["file"] == "None" and os.path.exists(dicParam["file"]):
+		dicFasta = read_fasta(dicParam["file"])
+
 	# If no fasta file is given in parameter
-	if dicParam["file"] == "None" :
+	elif dicParam["file"] == "None" :
 		fasta_gen(dicParam['filename'], dicParam['number_of_sequences'], dicParam['minimum_length'], dicParam['maximum_length'])
 		dicFasta = read_fasta(dicParam['filename'])
 
-	# If a fasta file is given in parameter
-	elif not dicParam["file"] == "None" and os.path.exists(dicParam["file"]) :
-		dicFasta = read_fasta(dicParam["file"])
-
 	# Error
 	else :
-		print(help())
-		exit(1)
+		help()
 
 	# Creation and visualization of graph
-	graph_gen(dicFasta, dicParam['treshold'])
+	graph_gen(dicFasta, dicParam['treshold'], dicParam['save_alignment_files'])
