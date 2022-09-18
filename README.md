@@ -14,10 +14,10 @@ This script aims to generate a graph to easily visualize pairwise alignment dist
 
 
 ## Roadmap
-[x] Fasta reader function
-[x] Construction of dictionary structure containing fasta sequence data
-[x] GCcontent calculation function
-[x] Graph construction considering GCcontent and pairwise distance values
-[x] Function to save alignments files
-[x] File containing script parameters
-[ ] Caption and graph legend
+- [x] Fasta reader function
+- [x] Construction of dictionary structure containing fasta sequence data
+- [x] GCcontent calculation function
+- [x] Graph construction considering GCcontent and pairwise distance values
+- [x] Function to save alignments files
+- [x] File containing script parameters
+- [ ] Caption and graph legend
