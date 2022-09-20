@@ -17,7 +17,6 @@ This script aims to generate a graph to easily visualize pairwise alignment dist
 
 
 ## Installation
-
 - Cloning the repository
 ```bash
 git clone https://github.com/Damien-Garcia-Bioinformatics/pairwiseGraph.git
@@ -36,7 +35,6 @@ python3 pairwiseGraph.py
 
 
 ## Running the script
-
 To execute the script, multiple ways to provide a fasta file are at your disposition.
 - Provide a file name in 'scriptParam.txt'. After cloning the repository, parameters are set to execute the script with the example sequences.
 This option was created for non-programmers users to be able to easily use this script and tweak the options without having to look through the code.
@@ -44,6 +42,7 @@ This option was created for non-programmers users to be able to easily use this 
 - Provide a file name through command line parameter : This method will override every other parameters. This is the prefered option if you want to use this script inside of a pipeline.
 
 - If no file is provided to the script, random sequences are generated. You can change the parameters of the random sequence generator in the 'scriptParam.txt' file.
+
 
 ## Roadmap
 ### Done
@@ -58,13 +57,7 @@ This option was created for non-programmers users to be able to easily use this 
 - [ ] Add parameters and options to tweak script execution (having the option to change the name of generated graph, etc)
 
 
-## Requirements
-Running the script requires matplotlib, pyqt5, netgraph, biopython and sub-requirements from previously cited libraries.
-
-You can use ``` pip install matplotlib pyqt5 netgraph bio ``` or ```pip install -r requirements.txt``` to install everything needed to run the script.
-
-### Full list of requirements
-
+## Full list of requirements
 ```bash
 bio==1.4.0
 biopython==1.79
