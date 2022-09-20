@@ -27,5 +27,6 @@ filename=seqGen.fasta;          # Name of file where generated sequence will be 
 save_alignment_files=False;     # Save alignment files in 'align' directory (True/False)
 
 # GRAPH GENERATOR :
+graph_name=generated_graph.png; # Generated graph image name
 treshold=0.56;                  # Minimum %identity between sequence for which alignment 
                                 # result is stored (float in [0,1])

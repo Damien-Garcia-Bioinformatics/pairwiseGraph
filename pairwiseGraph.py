@@ -55,6 +55,9 @@ def read_param_file() :
 						continue
 					dicParam["save_alignment_files"] = False
 					continue
+				elif words[0] == "graph_name" :
+					dicParam["graph_name"] = words[1]
+					continue
 				elif words[0] == "treshold" :
 					dicParam["treshold"] = float(words[1])
 					continue
@@ -134,7 +137,7 @@ def colors_RGBA(weight, treshold) :
 
 
 # Generates a graph visualization of pairwise sequence alignments.
-def graph_gen(dicFasta, treshold, saveAlign) :
+def graph_gen(dicFasta, treshold, saveAlign, graphName) :
 	lstID = list(dicFasta) # List of nodes name
 	
 	# Creates edges weighted by percentage of alignments between sequences
@@ -191,7 +194,7 @@ def graph_gen(dicFasta, treshold, saveAlign) :
 		node_label_fontdict=dict(size=9),
 		node_label_offset=0.14)
 	pyplot.tight_layout()
-	pyplot.savefig('generated_graph.png', format='png')
+	pyplot.savefig(graphName, format='png')
 	pyplot.show()
 
 
@@ -219,4 +222,4 @@ if __name__ == '__main__' :
 		help()
 
 	# Creation and visualization of graph
-	graph_gen(dicFasta, dicParam['treshold'], dicParam['save_alignment_files'])
+	graph_gen(dicFasta, dicParam['treshold'], dicParam['save_alignment_files'], dicParam['graph_name'])
