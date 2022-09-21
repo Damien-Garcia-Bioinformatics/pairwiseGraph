@@ -7,7 +7,7 @@ This script aims to generate a graph to easily visualize pairwise alignment dist
 
 ## Results format
 ### Graph result example
-![Graph result image](https://github.com/Damien-Garcia-Bioinformatics/pairwiseGraph/blob/main/generated_graph.png)
+![Graph result image](https://github.com/Damien-Garcia-Bioinformatics/pairwiseGraph/blob/main/figureReadme.png)
 
 - Every node represent a sequence and every edge is the alignment score.
 
