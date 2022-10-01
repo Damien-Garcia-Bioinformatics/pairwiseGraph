@@ -20,8 +20,16 @@ from matplotlib import pyplot
 ### Functions ###
 
 def help() :
-	print("Fasta file not found")
-	print("Go to : https://github.com/Damien-Garcia-Bioinformatics/pairwiseGraph for more informations")
+	print('''
+Error : pairwiseGraph.py execution error : Fasta file not found.
+Syntax is : ./pairwiseGraph [optional arguments] 
+\tsequences : path to fasta file containing sequences.
+\tgraphName : set file name for the graph representation (example.png)
+\tsaveAlign : save all alignment files in a dedicated repertory "align" (-yes or -no)
+\ttreshold  : set a treshold score for edges to visualize on graph (float)
+
+Go to : https://github.com/Damien-Garcia-Bioinformatics/pairwiseGraph for more informations.
+	''')
 	exit(1)
 
 
@@ -202,22 +210,37 @@ def graph_gen(dicFasta, treshold, saveAlign, graphName) :
 
 if __name__ == '__main__' :
 	# Extraction of parameters from "script_parameters.txt"
+	dicParam = {}
+	dicParam['save_alignment_files'] = False
 	dicParam = read_param_file()
 
-	# If a fasta file is given in command line parameter
-	if len(sys.argv) == 2 and os.path.exists(sys.argv[1]) :
-		dicFasta = read_fasta(sys.argv[1])
+	# Extraction of command line parameters : Parameters from command line have a higher priority which means that they will replace the ones set in scriptParam.txt.
+	if len(sys.argv) >= 2 :
+		for i in range(len(sys.argv)-1) :
+			if sys.argv[i] == "sequences" :
+				dicParam['file'] = sys.argv[i+1]
+				continue
+			if sys.argv[i] == "saveAlign" and (sys.argv[i+1].upper() == "-YES" or sys.argv[i+1].upper() == "-Y") :
+				dicParam['save_alignment_files'] = True
+				continue
+			if sys.argv[i] == "graphName" :
+				dicParam['graph_name'] = sys.argv[i+1]
+				continue
+			if sys.argv[i] == "treshold" :
+				dicParam['treshold'] = float(sys.argv[i+1])
+				continue
+
+	# # If a fasta file is given in command line parameter
+	# if len(sys.argv) == 2 and os.path.exists(sys.argv[1]) :
+	# 	dicFasta = read_fasta(sys.argv[1])
 
 	# If a fasta file is given in script parameter file
-	elif not dicParam["file"] == "None" and os.path.exists(dicParam["file"]):
+	if not dicParam["file"] == "None" and os.path.exists(dicParam["file"]):
 		dicFasta = read_fasta(dicParam["file"])
-
 	# If no fasta file is provided
 	elif dicParam["file"] == "None" :
 		fasta_gen(dicParam['filename'], dicParam['number_of_sequences'], dicParam['minimum_length'], dicParam['maximum_length'])
 		dicFasta = read_fasta(dicParam['filename'])
-
-	# Error
 	else :
 		help()
 
