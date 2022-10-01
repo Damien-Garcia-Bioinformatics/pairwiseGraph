@@ -30,7 +30,11 @@ pip install -r requirements
 ```
 - Running the script
 ```bash
-python3 pairwiseGraph.py
+python3 pairwiseGraph.py [optional arguments]
+  sequences : path to fasta file containing sequences.
+  graphName : set file name for the graph representation (example.png)
+  saveAlign : save all alignment files in a dedicated repertory "align" (-yes or -no)
+  treshold  : set a treshold score for edges to visualize on graph (float)
 ```
 
 
@@ -52,9 +56,9 @@ This option was created for non-programmers users to be able to easily use this 
 - [x] Graph construction considering GCcontent and pairwise distance values
 - [x] Function to save alignments files
 - [x] File containing script parameters
+- [x] Add parameters and options to tweak script execution (having the option to change the name of generated graph, etc)
 ### Work in progress
 - [ ] Caption and graph legend
-- [ ] Add parameters and options to tweak script execution (having the option to change the name of generated graph, etc)
 
 
 ## Full list of requirements
