@@ -26,7 +26,7 @@ git clone https://github.com/Damien-Garcia-Bioinformatics/pairwiseGraph.git
 ```bash
 virtualenv venvPairwiseGraph -p python3 &&
 source venvPairwiseGraph/bin/activate &&
-pip install -r requirements
+pip install -r requirements.txt
 ```
 - Running the script
 ```plaintext
