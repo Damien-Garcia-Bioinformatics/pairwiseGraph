@@ -29,7 +29,7 @@ source venvPairwiseGraph/bin/activate &&
 pip install -r requirements
 ```
 - Running the script
-```bash
+```plaintext
 python3 pairwiseGraph.py [optional arguments]
   sequences : path to fasta file containing sequences.
   graphName : set file name for the graph representation (example.png)
