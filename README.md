@@ -39,7 +39,7 @@ python3 pairwiseGraph.py [optional arguments]
 
 
 ## Running the script
-To execute the script, multiple ways to provide a fasta file are at your disposition.
+To execute the script, multiple ways of providing a fasta file are possible.
 - Provide a file name in 'scriptParam.txt'. After cloning the repository, parameters are set to execute the script with the example sequences.
 This option was created for non-programmers users to be able to easily use this script and tweak the options without having to look through the code.
 
