@@ -230,10 +230,6 @@ if __name__ == '__main__' :
 				dicParam['treshold'] = float(sys.argv[i+1])
 				continue
 
-	# # If a fasta file is given in command line parameter
-	# if len(sys.argv) == 2 and os.path.exists(sys.argv[1]) :
-	# 	dicFasta = read_fasta(sys.argv[1])
-
 	# If a fasta file is given in script parameter file
 	if not dicParam["file"] == "None" and os.path.exists(dicParam["file"]):
 		dicFasta = read_fasta(dicParam["file"])
