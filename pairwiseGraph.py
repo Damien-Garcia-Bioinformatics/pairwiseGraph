@@ -12,7 +12,7 @@ import os
 import sys
 from Bio import pairwise2
 from Bio.pairwise2 import format_alignment
-from random import randint
+from random import randint, choice
 from netgraph import Graph
 from matplotlib import pyplot
 
@@ -20,18 +20,24 @@ from matplotlib import pyplot
 ### Functions ###
 
 def help() :
-	print('''
-Error : pairwiseGraph.py execution error : Fasta file not found.
-Syntax is : ./pairwiseGraph [optional arguments] 
-\tsequences : path to fasta file containing sequences.
-\tgraphName : set file name for the graph representation (example.png)
-\tsaveAlign : save all alignment files in a dedicated repertory "align" (-yes or -no)
-\ttreshold  : set a treshold score for edges to visualize on graph (float)
-
-Go to : https://github.com/Damien-Garcia-Bioinformatics/pairwiseGraph for more informations.
-	''')
+	if os.path.exists("asciiArt") :
+		print(easter_egg())
+	print('Error : pairwiseGraph.py execution error : Fasta file not found.')
+	print('\nSyntax is : ./pairwiseGraph [optional arguments] ')
+	print('\tsequences : path to fasta file containing sequences.')
+	print('\tgraphName : set file name for the graph representation (example.png)')
+	print('\tsaveAlign : save all alignment files in a dedicated repertory "align" (-yes or -no)')
+	print('\ttreshold  : set a treshold score for edges to visualize on graph (float)')
+	print('\nGo to : https://github.com/Damien-Garcia-Bioinformatics/pairwiseGraph for more informations.')
 	exit(1)
 
+def easter_egg() :
+	asciiFile = choice(os.listdir("asciiArt"))
+	asciiString = ""
+	with open(f"asciiArt/{asciiFile}") as f :
+		for line in f :
+			asciiString += line
+	return asciiString
 
 # Extracts parameters from a plain text file and returns a dictionary
 def read_param_file() :
@@ -203,13 +209,14 @@ def graph_gen(dicFasta, treshold, saveAlign, graphName) :
 		node_label_offset=0.14)
 	pyplot.tight_layout()
 	pyplot.savefig(graphName, format='png')
-	pyplot.show()
+	#pyplot.show()
 
 
 ### Script execution ###
 
 if __name__ == '__main__' :
 	# Extraction of parameters from "script_parameters.txt"
+	print("[pairwiseGraph] Reading script parameters")
 	dicParam = {}
 	dicParam['save_alignment_files'] = False
 	dicParam = read_param_file()
@@ -231,14 +238,17 @@ if __name__ == '__main__' :
 				continue
 
 	# If a fasta file is given in script parameter file
-	if not dicParam["file"] == "None" and os.path.exists(dicParam["file"]):
+	if not dicParam["file"] == "None" and os.path.exists(dicParam["file"]) :
+		print("[pairwiseGraph] Extraction of data from fasta file")
 		dicFasta = read_fasta(dicParam["file"])
 	# If no fasta file is provided
 	elif dicParam["file"] == "None" :
+		print("[pairwiseGraph] Generating fasta sequences")
 		fasta_gen(dicParam['filename'], dicParam['number_of_sequences'], dicParam['minimum_length'], dicParam['maximum_length'])
 		dicFasta = read_fasta(dicParam['filename'])
 	else :
 		help()
 
 	# Creation and visualization of graph
+	print("[pairwiseGraph] Generating graph file")
 	graph_gen(dicFasta, dicParam['treshold'], dicParam['save_alignment_files'], dicParam['graph_name'])
