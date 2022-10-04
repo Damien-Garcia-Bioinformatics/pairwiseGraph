@@ -1,5 +1,5 @@
 #############################################################################################
-###############              PARAMETERS FILE - PairwiseGraph             ####################
+#################              PARAMETERS FILE - PairwiseGraph              #################
 #############################################################################################
 #                                                                                           #
 #                                    INFORMATIONS :                                         #
@@ -10,9 +10,12 @@
 #                                                                                           #
 #############################################################################################
 
+# JOB NAME :
+job_name=;                      # 'None' if you want to generated a filename from datetime
+
 
 # SEQUENCE TO USE :
-file=exampleSequences.fasta;    # 'None' if you want to use the sequence generator or a
+file=None;    # 'None' if you want to use the sequence generator or a
                                 # file in command line parameter
 
 
@@ -20,13 +23,12 @@ file=exampleSequences.fasta;    # 'None' if you want to use the sequence generat
 number_of_sequences=10;         # Number of sequence generated
 minimum_length=100;             # Minimum length of generated sequence
 maximum_length=1000;            # Should be higher than miminum length
-filename=seqGen.fasta;          # Name of file where generated sequence will be stored
 
 
 # ALIGNMENT FILE :
 save_alignment_files=False;     # Save alignment files in 'align' directory (True/False)
 
+
 # GRAPH GENERATOR :
-graph_name=generated_graph.png; # Generated graph image name
-treshold=0.56;                  # Minimum %identity between sequence for which alignment
+threshold=0.56;                 # Minimum %identity between sequence for which alignment
                                 # result is stored (float in [0,1])

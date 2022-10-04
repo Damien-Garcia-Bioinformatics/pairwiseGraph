@@ -9,5 +9,5 @@
  /:::=======:::\`\`\
  `"""""""""""""`  '-'
 
-"No fasta file found."
+"No fasta file found. The answer must be 42!"
 --Deep Thought
