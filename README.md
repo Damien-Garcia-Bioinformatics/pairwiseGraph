@@ -34,7 +34,7 @@ python3 pairwiseGraph.py [optional arguments]
   sequences : path to fasta file containing sequences.
   graphName : set file name for the graph representation (example.png)
   saveAlign : save all alignment files in a dedicated repertory "align" (-yes or -no)
-  treshold  : set a treshold score for edges to visualize on graph (float)
+  threshold  : set a treshold score for edges to visualize on graph (float)
 ```
 
 
