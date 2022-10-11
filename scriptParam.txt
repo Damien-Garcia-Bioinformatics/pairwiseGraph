@@ -11,11 +11,11 @@
 #############################################################################################
 
 # JOB NAME :
-job_name=;                      # 'None' or '' if you want to generated a filename from datetime
+job_name=;                      # '' if you want to generated a filename from datetime
 
 
 # SEQUENCE TO USE :
-file=None;                      # 'None' or '' if you want to use the sequence generator or a
+file=exampleSequences.fasta;    # 'None' or '' if you want to use the sequence generator or a
                                 # file in command line parameter
 
 

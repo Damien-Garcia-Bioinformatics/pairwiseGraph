@@ -159,6 +159,7 @@ def colors_RGBA(weight, threshold) :
 	A = R
 	return [R,G,B,A]
 
+
 # def write_csv() :
 # 	with open(f"align_{jobname}.csv") as f :
 # 		f.write(f"{seq1};{seq2};{score};{GCcontent1};{GCcontent2}\n")
