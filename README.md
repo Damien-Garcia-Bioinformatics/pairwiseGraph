@@ -1,8 +1,12 @@
 # pairwiseGraph
 Script programming project in 2nd year of Master's Degree.
 
+
 ### What is pairwiseGraph?
 This script aims to generate a graph to easily visualize pairwise alignment distances between sequences.
+Other files are created :
+- A compact csv file containing names of sequences aligned, the corresponding align and GC contents of sequences.
+- A directory containing the formated alignment.
 
 
 ## Results format
@@ -39,6 +43,8 @@ python3 pairwiseGraph.py [optional arguments]
 
 
 ## Running the script
+You can use ```python3 pairwiseGraph.py help``` to print execution help sheet.
+
 To execute the script, multiple ways of providing a fasta file are possible.
 - Provide a file name in 'scriptParam.txt'. After cloning the repository, parameters are set to execute the script with the example sequences.
 This option was created for non-programmers users to be able to easily use this script and tweak the options without having to look through the code.
@@ -57,8 +63,15 @@ This option was created for non-programmers users to be able to easily use this 
 - [x] Function to save alignments files
 - [x] File containing script parameters
 - [x] Add parameters and options to tweak script execution (having the option to change the name of generated graph, etc)
+- [x] Help function
+- [x] An easter egg because programmation should be fun ;)
 ### Work in progress
 - [ ] Caption and graph legend
+
+
+## Easter Egg
+
+The directory "asciiArt" is just here as an easter egg and is used if the user doesn't provide a fasta file for the script to run. It is of course not a necessary directory for to script to be fully working. You can delete this directory (asciiArt) at any time... :'(
 
 
 ## Full list of requirements

@@ -21,6 +21,7 @@ from matplotlib import pyplot
 
 ### Functions ###
 
+# Help function that is printed if script returns an error in execution.
 def help(ask4help) :
 	if os.path.exists("asciiArt") and ask4help == False :
 		print(easter_egg())
@@ -159,11 +160,13 @@ def colors_RGBA(weight, threshold) :
 	A = R
 	return [R,G,B,A]
 
-
-# def write_csv() :
-# 	with open(f"align_{jobname}.csv") as f :
-# 		f.write(f"{seq1};{seq2};{score};{GCcontent1};{GCcontent2}\n")
-# 	return 0
+# Generates a csv format file with compact result of every alignement 
+def write_csv(jobName, seq1, seq2, GCcontent1, GCcontent2, score) :
+	# Opens file in append mode
+	with open(f"results/{jobName}/compact_results.csv", "a") as f :
+		if os.path.getsize(f"results/{jobName}/compact_results.csv") == 0:
+			f.write("seq1;seq2;GCcontent1;GCcontent2;score\n")
+		f.write(f"{seq1};{seq2};{GCcontent1};{GCcontent2};{score}\n")
 
 
 # Generates a graph visualization of pairwise sequence alignments.
@@ -191,6 +194,10 @@ def graph_gen(dicFasta, threshold, saveAlign, jobName) :
 				# List containing length of longest sequence between the two sequences used for pairwise alignment
 				seqLen.append(max(len(dicFasta[lstID[i]]['sequence']), len(dicFasta[lstID[j]]['sequence'])))
 
+				# Writes a compact result file in csv format
+				score = alignments[0][2]/seqLen[i]
+				write_csv(jobName, lstID[i], lstID[j], dicFasta[lstID[i]]['GCcontent'], dicFasta[lstID[j]]['GCcontent'], score)
+
 	# Nodes parameters
 	nodesSize = {}
 	for i in range(len(lstID)) :
@@ -201,7 +208,7 @@ def graph_gen(dicFasta, threshold, saveAlign, jobName) :
 	edgesColor = {}
 	edgesAlpha = {}
 	for i in range(len(edges2draw)) :
-		weights.append((edges2draw[i][2]/seqLen[i])) #Poids entre 0 et 1
+		weights.append((edges2draw[i][2]/seqLen[i])) # Weight between 0 an 1
 		edgesColor[edges2draw[i][0], edges2draw[i][1]] = colors_RGBA(weights[i], threshold)
 		if edgesColor[edges2draw[i][0],edges2draw[i][1]][3] < 0 :		# Case where weight < threshold
 			edgesColor[edges2draw[i][0],edges2draw[i][1]] = [0,0,0,0]
