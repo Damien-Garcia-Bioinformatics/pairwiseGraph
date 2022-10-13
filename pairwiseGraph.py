@@ -28,10 +28,11 @@ def help(ask4help) :
 		print('[pairwiseGraph] [Error] : pairwiseGraph.py execution error : Fasta file not found.\n')
 	
 	print('Syntax is : ./pairwiseGraph [optional arguments] ')
-	print('\tjobName   : set name for the directory containing all results')
-	print('\tsequences : path to fasta file containing sequences.')
-	print('\tsaveAlign : save all alignment files in a dedicated repertory "align" (-yes or -no)')
-	print('\tthreshold : set a threshold score for edges to visualize on graph (float)')
+	print('\tjobName    : set name for the directory containing all results')
+	print('\tsequences  : path to fasta file containing sequences.')
+	print('\tsaveAlign  : save all alignment files in a dedicated repertory "align" (-yes or -no)')
+	print('\tthreshold  : set a threshold score for edges to visualize on graph (float)')
+	print('\tgeneration : set generation parameters [nb of seq] [min size] [max size]')
 	print('\nFor more informations, please take a look at my GitHub repository :\nhttps://github.com/Damien-Garcia-Bioinformatics/pairwiseGraph')
 	exit(1)
 
@@ -293,6 +294,7 @@ if __name__ == '__main__' :
 	else :
 		help(ask4help)
 
-	# Creation and visualization of graph
+	# Creation of pairwise distance graph
 	print("[pairwiseGraph] Generating graph file")
 	graph_gen(dicFasta, dicParam['threshold'], dicParam['save_alignment_files'], dicParam['job_name'])
+	print(f"[pairwiseGraph] See results in directory : results/{dicParam['job_name']}")
