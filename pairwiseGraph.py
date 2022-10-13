@@ -35,6 +35,8 @@ def help(ask4help) :
 	print('\nFor more informations, please take a look at my GitHub repository :\nhttps://github.com/Damien-Garcia-Bioinformatics/pairwiseGraph')
 	exit(1)
 
+
+# Easter egg function printing an ascii art on error message if you tried to execute the script without providing a fasta file
 def easter_egg() :
 	asciiFile = choice(os.listdir("asciiArt"))
 	asciiString = ""
@@ -43,9 +45,11 @@ def easter_egg() :
 			asciiString += line
 	return asciiString
 
+
 # Returns current time which is used for file naming purpose
 def get_time() :
 	return time.strftime('%y%m%d_%H%M%S')
+
 
 # Extracts parameters from a plain text file (scriptParam.txt) and returns a dictionary
 def read_param_file() :
@@ -101,8 +105,8 @@ def fasta_gen(jobName, nbSeq, minLen, maxLen) :
 			seq += tablebase[randint(0,3)]
 		sequences.append(seq)
 
-	# Writing of generated sequences in fasta file
-	with open(f"results/{jobName}/seqGen.fasta", 'w+') as file :
+	# Writes generated sequences in fasta file
+	with open(f"results/{jobName}/sequences.fasta", 'w+') as file :
 		for i in range(len(sequences)) :
 			file.write(f">random{i}\n{sequences[i]}\n")
 
@@ -159,6 +163,7 @@ def colors_RGBA(weight, threshold) :
 	B = 1 - R
 	A = R
 	return [R,G,B,A]
+
 
 # Generates a csv format file with compact result of every alignement 
 def write_csv(jobName, seq1, seq2, GCcontent1, GCcontent2, score) :
@@ -254,7 +259,7 @@ if __name__ == '__main__' :
 	# Extraction of command line parameters : Parameters from command line have a higher priority which means that they will replace the ones set in scriptParam.txt.
 	if len(sys.argv) >= 2 :
 		for i in range(len(sys.argv)-1) :
-			if sys.argv[i] == "jobName" :
+			if sys.argv[i].lower() == "jobname" :
 				dicParam['job_name'] = sys.argv[i+1]
 				continue
 			if sys.argv[i] == "sequences" :
@@ -265,6 +270,11 @@ if __name__ == '__main__' :
 				continue
 			if sys.argv[i] == "threshold" :
 				dicParam['threshold'] = float(sys.argv[i+1])
+				continue
+			if sys.argv[i] == "generation" :
+				dicParam['number_of_sequences'] = int(sys.argv[i+1])
+				dicParam['minimum_length'] = int(sys.argv[i+2])
+				dicParam['maximum_length'] = int(sys.argv[i+3])
 				continue
 	
 	# Creation of repertory to job results
@@ -279,7 +289,7 @@ if __name__ == '__main__' :
 	elif dicParam["file"] in ['None',''] :
 		print("[pairwiseGraph] Generating fasta sequences")
 		fasta_gen(dicParam['job_name'], dicParam['number_of_sequences'], dicParam['minimum_length'], dicParam['maximum_length'])
-		dicFasta = read_fasta(f"results/{dicParam['job_name']}/seqGen.fasta")
+		dicFasta = read_fasta(f"results/{dicParam['job_name']}/sequences.fasta")
 	else :
 		help(ask4help)
 

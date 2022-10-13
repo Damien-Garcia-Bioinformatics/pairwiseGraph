@@ -32,6 +32,7 @@ virtualenv venvPairwiseGraph -p python3 &&
 source venvPairwiseGraph/bin/activate &&
 pip install -r requirements.txt
 ```
+
 - Running the script
 ```plaintext
 python3 pairwiseGraph.py [optional arguments]
@@ -39,6 +40,7 @@ python3 pairwiseGraph.py [optional arguments]
   graphName : set file name for the graph representation (example.png)
   saveAlign : save all alignment files in a dedicated repertory "align" (-yes or -no)
   threshold  : set a treshold score for edges to visualize on graph (float)
+  generation : set parameters for sequence generation in this order : [nb os sequence generated] [minimum length of sequences] [maximum length of sequences]
 ```
 
 

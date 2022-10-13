@@ -15,7 +15,7 @@ job_name=;                      # '' if you want to generated a filename from da
 
 
 # SEQUENCE TO USE :
-file=exampleSequences.fasta;    # 'None' or '' if you want to use the sequence generator or a
+file=;						    # 'None' or '' if you want to use the sequence generator or a
                                 # file in command line parameter
 
 
