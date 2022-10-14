@@ -7,7 +7,7 @@
 # https://github.com/Damien-Garcia-Bioinformatics/pairwiseGraph
 
 
-### Library imports ###
+########## Library imports ##########
 
 import os
 import sys
@@ -19,7 +19,7 @@ from netgraph import Graph
 from matplotlib import pyplot
 
 
-### Functions ###
+########## Functions ##########
 
 # Help function that is printed if script returns an error in execution.
 def help(ask4help) :
@@ -36,6 +36,7 @@ def help(ask4help) :
 	print('\nFor more informations, please take a look at my GitHub repository :\nhttps://github.com/Damien-Garcia-Bioinformatics/pairwiseGraph')
 	exit(1)
 
+###
 
 # Easter egg function printing an ascii art on error message if you tried to execute the script without providing a fasta file
 def easter_egg() :
@@ -46,21 +47,25 @@ def easter_egg() :
 			asciiString += line
 	return asciiString
 
+#####
 
 # Returns current time which is used for file naming purpose
 def get_time() :
 	return time.strftime('%y%m%d_%H%M%S')
 
+#####
 
 # Extracts parameters from a plain text file (scriptParam.txt) and returns a dictionary
 def read_param_file() :
 	dicParam = {}
-	with open("scriptParam.txt") as paramFile :
+	with open("scriptParam.txt") as paramFile : #Opens parameter file
 		for line in paramFile :
-			line = line.rstrip('\n')
-			if not line.startswith('#') :
-				words = line.split(';')
+			line = line.rstrip('\n') #Removes empty lines in file
+			if not line.startswith('#') : #Check if line isn't a comment
+				words = line.split(';') #End character
 				words = words[0].split('=')
+				
+				# Creation of dictionary structure containing parameters
 				if words[0] == "file" :
 					dicParam["file"] = words[1]
 					continue
@@ -93,6 +98,7 @@ def read_param_file() :
 					continue
 	return dicParam
 
+#####
 
 # Generates a fasta file containing nucleic acid sequences
 def fasta_gen(jobName, nbSeq, minLen, maxLen) :
@@ -111,6 +117,7 @@ def fasta_gen(jobName, nbSeq, minLen, maxLen) :
 		for i in range(len(sequences)) :
 			file.write(f">random{i}\n{sequences[i]}\n")
 
+#####
 
 # Calculates the percentage of GC in nucleic acid sequence
 def GCcontent(seq) :
@@ -121,33 +128,40 @@ def GCcontent(seq) :
 			count += 1
 	return (count/seqLen)*100
 
+#####
 
 # Reads a fasta file and creates a dictionary containing ID, sequence, and GC percentage of every entry
 def read_fasta(file) :
 	dicFasta = {}
-	with open(file) as f :
+	with open(file) as f : #Opens fasta file
 		seq = ''
+
+		# Creation of dictionary containing fasta header, sequence and GC content percentage
 		for line in f :
-			line = line.rstrip('\n')
-			if line.startswith('>') :
+			line = line.rstrip('\n') #Removes empty lines
+			if line.startswith('>') : #Fasta sequence header
 				seq = ''
 				id = line[1:]
 				continue
-			else :
+			else :	#Fasta sequence
 				seq += line
 			dicFasta[id] = {"sequence" : seq, "GCcontent" : GCcontent(seq)}
 	return dicFasta
 
+#####
 
 # Prints alignment results in a plain text format file. Every alignment is systematicaly named and stored in 'align' directory
 def beautiful_print(jobName, result, seq1, seq2) :
+	# Formatting parameters of alignments
 	maxSize = 80
 	p = len(result[0]) // maxSize
 	r = len(result[0]) % maxSize
 	if r != 0 :
 		p += 1
 	
-	os.makedirs(f"results/{jobName}/align", exist_ok=True)
+	os.makedirs(f"results/{jobName}/align", exist_ok=True) #Creates 'align' directory
+
+	# Creates individual files for each alignment
 	with open(f"results/{dicParam['job_name']}/align/{seq1}_{seq2}.txt", "w+") as f :
 		f.write(f"{seq1} - {seq2} result alignment :\n\n")
 		for i in range(p) :
@@ -156,8 +170,9 @@ def beautiful_print(jobName, result, seq1, seq2) :
 			f.write(f"{result[2][i*maxSize:(i+1)*maxSize]}\n\n")
 		f.write(result[3])
 
+#####
 
-# Generates RGBA color format considering weight and threshold parameters.
+# Generates RGBA color format considering weight and threshold parameters for edges in graph
 def colors_RGBA(weight, threshold) :
 	R = min((weight*(1/threshold)-(2*threshold)), 1)
 	G = 0
@@ -165,6 +180,7 @@ def colors_RGBA(weight, threshold) :
 	A = R
 	return [R,G,B,A]
 
+#####
 
 # Generates a csv format file with compact result of every alignement 
 def write_csv(jobName, seq1, seq2, GCcontent1, GCcontent2, score) :
@@ -174,6 +190,7 @@ def write_csv(jobName, seq1, seq2, GCcontent1, GCcontent2, score) :
 			f.write("seq1;seq2;GCcontent1;GCcontent2;score\n")
 		f.write(f"{seq1};{seq2};{GCcontent1};{GCcontent2};{score}\n")
 
+#####
 
 # Generates a graph visualization of pairwise sequence alignments.
 def graph_gen(dicFasta, threshold, saveAlign, jobName) :
@@ -240,7 +257,7 @@ def graph_gen(dicFasta, threshold, saveAlign, jobName) :
 	#pyplot.show()
 
 
-### Script execution ###
+########## Script execution ##########
 
 if __name__ == '__main__' :
 
